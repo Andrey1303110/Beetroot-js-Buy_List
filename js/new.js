@@ -14,6 +14,7 @@ addButton.addEventListener('click', function () {
 
     todoList.push(newToDo);
     displayMessage();
+    localStorage.setItem('todo', JSON.stringify(todoList));
 });
 
 function displayMessage() {
@@ -21,10 +22,9 @@ function displayMessage() {
     todoList.forEach(function (item, i) {
         displayMessage += `
         <li>
-        <input type='checkbox' id='item_${i}'>
+        <input type='checkbox' id='item_${i}' ${item.checked ? 'checked' : ''}>
         <label for='item_${i}'>${item.todo}</label>
         </li>`;
         todo.innerHTML = displayMessage;
-        console.log(displayMessage);
     });
 }
