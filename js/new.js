@@ -4,6 +4,11 @@ let addMessage = document.querySelector('.message'),
 
 let todoList = [];
 
+if (localStorage.getItem('todo')) {
+    todoList = JSON.parse(localStorage.getItem('todo'));
+    displayMessage();
+}
+
 addButton.addEventListener('click', function () {
 
     let newToDo = {
@@ -28,3 +33,8 @@ function displayMessage() {
         todo.innerHTML = displayMessage;
     });
 }
+
+todo.addEventListener('change', function (event) {
+    let valueLabel = todo.querySelector('[for=' + idInput + ']').innerHTML + event.target.getAttribute('id');
+
+})
