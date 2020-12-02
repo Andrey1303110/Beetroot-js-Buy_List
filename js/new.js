@@ -1,65 +1,57 @@
-let addMessage = document.querySelector('.message'),
-    addButton = document.querySelector('.add'),
-    todo = document.querySelector('.todo');
+var input = document.querySelector("#myText");
+var ul = document.querySelector("ul");
+var addBtn = document.querySelector(".addBtn");
+var lis = document.querySelectorAll("li");
+var deleteBtns = document.querySelectorAll(".deleteBtn");
 
-let todoList = [];
-
-if (localStorage.getItem('todo')) {
-    todoList = JSON.parse(localStorage.getItem('todo'));
-    displayMessages();
-}
-
-addButton.addEventListener('click', function () {
-    if (!addMessage.value) return;
-    let newToDo = {
-        todo: addMessage.value,
-        checked: false,
-        important: false
-    };
-
-    todoList.push(newToDo);
-    displayMessages();
-    localStorage.setItem('todo', JSON.stringify(todoList));
-    addMessage.value = '';
+//добавляем слушателя, который ориентирован на клик
+addBtn.addEventListener("click", () => {
+    addLi()
 });
 
-function displayMessages() {
-    let displayMessage = '';
-    if (todoList.length === 0) todo.innerHTML = '';
-    todoList.forEach(function (item, i) {
-        displayMessage += `
-        <li>
-        <input type='checkbox' id='item_${i}' ${item.checked ? 'checked' : ''}>
-        <label for='item_${i}'> class="${item.important ? 'important' : ''}">${item.todo}</label>
-        </li>
-        `;
-        todo.innerHTML = displayMessage;
-    });
-}
-
-todo.addEventListener('change', function (event) {
-    let valueLabel = todo.querySelector('[for=' + event.target.getAttribute('id') + ']').innerHTML;
-
-    todoList.forEach(function (item) {
-        if (item.todo === valueLabel) {
-            item.checked = !item.checked;
-            localStorage.setItem('todo', JSON.stringify(todoList));
-        }
-    });
-
+//добавляем поддержку нажатия ввода энтером
+input.addEventListener("keypress", (e) => {
+    if (e.keyCode === 13 || e.which === 13) {
+        addLi();
+    }
 });
 
-todo.addEventListener('contextmenu', function (event) {
-    event.preventDefault();
-    todoList.forEach(function (item, i) {
-        if (item.todo === event.target.innerHTML) {
-            if (event.ctrlKey || event.metaKey) {
-                todoList.splice(i, 1);
-            } else {
-                item.important = !item.important;
-            }
-            displayMessages();
-            localStorage.setItem('todo', JSON.stringify(todoList));
-        }
+//сама функция по добавлению Элемента списка
+var addLi = () => {
+    var trimmedText = input.value.trim();
+    if (!trimmedText == "" || !trimmedText == 0) {
+
+        var li = document.createElement("li");
+        li.classList.add("list-group-item", "d-flex", "align-items-center");
+        li.textContent = input.value + " ";
+        li.addEventListener("click", () => {
+            li.classList.toggle("list-group-item-danger");
+        });
+
+        var deleteBtn = document.createElement("button");
+        deleteBtn.classList.add("deleteBtn", "btn", "btn-danger", "btn-sm", "ml-auto");
+        deleteBtn.textContent = "Delete";
+        deleteBtn.addEventListener("click", function () {
+            this.parentElement.remove();
+        });
+
+        li.appendChild(deleteBtn);
+        ul.appendChild(li);
+
+        input.value = "";
+    } else return;
+};
+
+// Toggle danger class on li when li is clicked
+lis.forEach((li) => {
+    li.addEventListener("click", () => {
+        li.classList.toggle("list-group-item-danger");
+    });
+});
+
+//Remove li when delete button is clicked
+deleteBtns.forEach((deleteBtn) => {
+    deleteBtn.addEventListener("click", function () {
+        this.parentElement.remove();
     });
 });

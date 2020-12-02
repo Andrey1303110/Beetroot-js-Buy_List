@@ -8,26 +8,40 @@
     <title>Document</title>
 </head>
 
-<body>
-    <div class="container">
+<body class="d-flex flex-column justify-content-center">
+    <div class="container text-center">
+        <h1 class="mb-5">Shopping List</h1>
 
-        <div class="todo_list">
-            <h1>Buy list</h1>
-            <div class="create_new_todo">
-                <input type="text" class="message" placeholder="Описание">
-                <button class="add">Добавить</button>
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <div class="input-group mb-5">
+                    <input type="text" class="form-control form-control-lg" name="myText" id="myText"
+                        placeholder="Shopping List Item">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-success btn-lg addBtn" type="button">Add Item</button>
+                    </div>
+                </div>
             </div>
-
-            <div class="wrapper">
-                <ul class="todo"></ul>
-            </div>
-
         </div>
 
-    </div>
+        <div class="row">
+            <div class="col-lg-6 mx-auto">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex align-items-center">Krinkly Potato Chips
+                        <button class="btn btn-danger btn-sm ml-auto deleteBtn">Delete</button>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">Toads Corned Beef Hash
+                        <button class="btn btn-danger btn-sm ml-auto deleteBtn">Delete</button>
+                    </li>
+                    <li class="list-group-item d-flex align-items-center">Spinach
+                        <button class="btn btn-danger btn-sm ml-auto deleteBtn">Delete</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
+    </div><!-- /container -->
     <script src="./js/new.js"></script>
-
 </body>
 
 </html>
